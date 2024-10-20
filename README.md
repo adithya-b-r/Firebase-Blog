@@ -165,6 +165,8 @@ src
 └── App.tsx                 # Main application component
 ```
 
+##Live Preview [https://pedro-react-15aa8.web.app/]
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a pull request or open an issue.
