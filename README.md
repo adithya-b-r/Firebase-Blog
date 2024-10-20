@@ -24,8 +24,8 @@ To get started with the project, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
-   cd your-repo-name
+   https://github.com/adithya-b-r/Firebase-Blog
+   cd Firebase-Blog
    ```
 
 2. Install the necessary dependencies:
