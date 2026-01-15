@@ -1,42 +1,77 @@
-# Firebase React App
+# Firebase Blog
 
-This project is a simple React application that integrates Firebase for authentication and real-time data management. Users can sign in using Google and create posts that are stored in Firestore.
+A modern, full-stack blogging platform built with React and Firebase. Users can authenticate with Google, create blog posts, and interact with content through a like/unlike system. All data is stored in real-time using Firebase Firestore.
 
-## Features
+## ✨ Features
 
-- User authentication with Google
-- Create, read, and delete posts
-- Like functionality for posts
+### 🔐 Authentication
+- **Google Sign-In**: Seamless authentication using Google OAuth via Firebase Auth
+- **User Profile Display**: Shows authenticated user's name and profile photo in the navbar
+- **Sign Out**: Users can log out with a single click
+- **Protected Routes**: Create post functionality only available to authenticated users
 
-## Technologies Used
+### 📝 Post Management
+- **Create Posts**: Authenticated users can create blog posts with title and description
+- **View All Posts**: Home page displays all posts from Firestore database in real-time
+- **Post Information**: Each post displays title, description, and author username
+- **Form Validation**: Built-in validation using Yup schema validation to ensure required fields
 
-- React
-- Firebase
-- Redux (for state management)
-- React Router (for routing)
-- React Hook Form (for form handling)
-- Yup (for form validation)
+### 👍 Interactive Like System
+- **Like/Unlike Posts**: Users can like or unlike any post
+- **Real-time Like Counter**: Displays the total number of likes for each post
+- **User-specific Like Status**: Shows thumbs up (👍) if user hasn't liked, thumbs down (👎) if already liked
+- **Persistent Likes**: All likes stored in Firestore and persist across sessions
 
-## Installation
+### 🧭 Navigation
+- **Dynamic Navbar**: Navigation links change based on authentication state
+  - Not authenticated: Shows "Home" and "Login" links
+  - Authenticated: Shows "Home" and "Create Post" links
+- **Responsive Design**: Clean and intuitive user interface
 
-To get started with the project, follow these steps:
+## 🛠️ Technologies Used
 
-1. Clone the repository:
+### Frontend
+- **React** (v18.3.1) - UI library with TypeScript support
+- **TypeScript** (v4.9.5) - Static type checking
+- **React Router DOM** (v6.27.0) - Client-side routing
+- **React Hook Form** (v7.53.1) - Form handling and validation
+- **Yup** (v1.4.0) - Schema validation for forms
+- **@hookform/resolvers** (v3.9.0) - Integration between React Hook Form and Yup
 
+### Backend & Database
+- **Firebase** (v10.14.1) - Backend-as-a-Service platform
+  - **Firebase Authentication** - Google OAuth authentication
+  - **Cloud Firestore** - NoSQL real-time database for posts and likes
+- **react-firebase-hooks** (v5.1.1) - React hooks for Firebase services
+
+### Build & Development
+- **React Scripts** (v5.0.1) - Build tooling and development server
+- **Create React App** - Project scaffolding
+
+## 📦 Installation
+
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn
+- Firebase account with a project set up
+
+### Setup Steps
+
+1. **Clone the repository:**
    ```bash
-   https://github.com/adithya-b-r/Firebase-Blog
+   git clone https://github.com/adithya-b-r/Firebase-Blog
    cd Firebase-Blog
    ```
 
-2. Install the necessary dependencies:
-
+2. **Install dependencies:**
    ```bash
-   npm install firebase react-redux @reduxjs/toolkit react-router-dom react-firebase-hooks yup @hookform/resolvers
+   npm install
    ```
 
-3. Create a `.env` file in the root of your project and add your Firebase configuration:
-
-   ```plaintext
+3. **Configure Firebase:**
+   
+   Create a `.env` file in the root directory and add your Firebase configuration:
+   ```env
    REACT_APP_FIREBASE_API_KEY=your_api_key
    REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
    REACT_APP_FIREBASE_PROJECT_ID=your_project_id
@@ -45,128 +80,229 @@ To get started with the project, follow these steps:
    REACT_APP_FIREBASE_APP_ID=your_app_id
    ```
 
-4. Start the development server:
+   **To get your Firebase config:**
+   - Go to [Firebase Console](https://console.firebase.google.com/)
+   - Select your project (or create a new one)
+   - Go to Project Settings > General
+   - Scroll down to "Your apps" and copy the config values
 
+4. **Set up Firebase Services:**
+   
+   In your Firebase Console:
+   - **Enable Authentication:**
+     - Go to Authentication > Sign-in method
+     - Enable Google as a sign-in provider
+   
+   - **Create Firestore Database:**
+     - Go to Firestore Database
+     - Create database in production mode (or test mode for development)
+     - Create two collections: `posts` and `likes`
+
+5. **Start the development server:**
    ```bash
    npm start
    ```
+   
+   The app will open at [http://localhost:3000](http://localhost:3000)
 
-## Usage
+6. **Build for production:**
+   ```bash
+   npm run build
+   ```
 
-- Navigate to the **Login** page to sign in with Google.
-- After logging in, you can create posts on the **Create Post** page.
-- The **Main** page displays all posts, allowing users to like and view posts.
+## 🚀 Usage
 
-## Code Snippets
+### For Users
 
-### App Component
+1. **Sign In:**
+   - Click on "Login" in the navigation bar
+   - Click "Sign In With Google" button
+   - Authorize the application with your Google account
 
-The main application component sets up routing and navigation.
+2. **Create a Post:**
+   - After signing in, click "Create Post" in the navbar
+   - Enter a title and description for your post
+   - Both fields are required (validation enforced)
+   - Click "Submit" to publish your post
+   - You'll be redirected to the home page
 
-```javascript
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Main } from './pages/main/main';
-import { Login } from './pages/login';
-import { Navbar } from './components/navbar';
-import { CreatePost } from './pages/create-post/create-post';
+3. **View Posts:**
+   - Navigate to the home page
+   - All posts are displayed with title, description, and author
+   - Each post shows the total number of likes
 
-function App() {
-  return (
-    <div className="App">
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="" element={<Main />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/createpost" element={<CreatePost />} />
-        </Routes>
-      </Router>
-    </div>
-  );
-}
+4. **Like/Unlike Posts:**
+   - Click the thumbs up icon (👍) to like a post
+   - Click the thumbs down icon (👎) to unlike a post you've already liked
+   - Like count updates in real-time
 
-export default App;
-```
+5. **Sign Out:**
+   - Click the "Log Out" button in the navbar
+   - Your session will end, and you'll be signed out
 
-### Login Component
-
-The login component allows users to sign in with Google.
-
-```javascript
-import { auth, provider } from '../config/firebase';
-import { signInWithPopup } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
-
-export const Login = () => {
-  const navigate = useNavigate();
-
-  const signInWithGoogle = async () => {
-    const result = await signInWithPopup(auth, provider);
-    console.log(result);
-    navigate('/');
-  };
-
-  return (
-    <div>
-      <p>Sign In With Google To Continue</p>
-      <button onClick={signInWithGoogle}>Sign In With Google</button>
-    </div>
-  );
-};
-```
-
-### Creating Posts
-
-The Create Form component handles the creation of new posts using a form.
-
-```javascript
-import { useForm } from 'react-hook-form';
-import { addDoc, collection } from 'firebase/firestore';
-import { db } from '../../config/firebase';
-
-export const CreateForm = () => {
-  const { register, handleSubmit } = useForm();
-
-  const postRef = collection(db, 'posts');
-
-  const onCreatePost = async (data) => {
-    await addDoc(postRef, {
-      ...data,
-      username: user?.displayName,
-      userId: user?.uid,
-    });
-    navigate('/');
-  };
-
-  return (
-    <form onSubmit={handleSubmit(onCreatePost)}>
-      <input placeholder='Title...' {...register("title")} />
-      <textarea placeholder='Description...' {...register("description")} />
-      <input type="submit" />
-    </form>
-  );
-};
-```
-
-## Folder Structure
+## 📁 Project Structure
 
 ```plaintext
-src
-├── components
-│   └── navbar.tsx          # Navigation bar component
-├── config
-│   └── firebase.ts         # Firebase configuration and initialization
-├── pages
-│   ├── create-post         # Create Post page
-│   │   ├── create-form.tsx # Form for creating posts
-│   ├── login.tsx           # Login page
-│   └── main
-│       └── main.tsx        # Main page displaying posts
-└── App.tsx                 # Main application component
+Firebase-Blog/
+├── public/
+│   ├── index.html          # HTML template
+│   ├── manifest.json       # PWA manifest
+│   ├── user.png           # Default user avatar
+│   └── ...
+├── src/
+│   ├── components/
+│   │   └── navbar.tsx     # Navigation bar with auth state
+│   ├── config/
+│   │   └── firebase.ts    # Firebase configuration and initialization
+│   ├── pages/
+│   │   ├── create-post/
+│   │   │   ├── create-form.tsx   # Form component with validation
+│   │   │   └── create-post.tsx   # Create post page wrapper
+│   │   ├── main/
+│   │   │   ├── main.tsx          # Home page displaying all posts
+│   │   │   └── post.tsx          # Individual post component with like system
+│   │   └── login.tsx             # Login page with Google auth
+│   ├── App.tsx            # Main app component with routing
+│   ├── App.css            # Global styles
+│   └── index.tsx          # App entry point
+├── .env                   # Environment variables (not in repo)
+├── .gitignore
+├── firebase.json          # Firebase hosting configuration
+├── package.json           # Project dependencies
+├── tsconfig.json          # TypeScript configuration
+└── README.md
 ```
 
-### Live Preview [https://pedro-react-15aa8.web.app/]
+## 🔥 Firebase Configuration
 
-## Contributing
+### Firestore Collections
 
-Contributions are welcome! Please feel free to submit a pull request or open an issue.
+**posts** collection:
+```javascript
+{
+  title: string,
+  description: string,
+  username: string,
+  userId: string
+}
+```
+
+**likes** collection:
+```javascript
+{
+  postId: string,
+  userId: string
+}
+```
+
+### Security Rules (Recommended)
+
+Add these rules in Firebase Console under Firestore Database > Rules:
+
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /posts/{postId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+    
+    match /likes/{likeId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow delete: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+  }
+}
+```
+
+## 🌐 Deployment
+
+This project is configured for Firebase Hosting.
+
+1. **Install Firebase CLI:**
+   ```bash
+   npm install -g firebase-tools
+   ```
+
+2. **Login to Firebase:**
+   ```bash
+   firebase login
+   ```
+
+3. **Initialize Firebase Hosting:**
+   ```bash
+   firebase init hosting
+   ```
+
+4. **Build and deploy:**
+   ```bash
+   npm run build
+   firebase deploy
+   ```
+
+### Live Demo
+🔗 [https://pedro-react-15aa8.web.app/](https://pedro-react-15aa8.web.app/)
+
+## 📝 Available Scripts
+
+- `npm start` - Runs the app in development mode
+- `npm run build` - Builds the app for production
+- `npm test` - Runs the test suite
+- `npm run eject` - Ejects from Create React App (one-way operation)
+
+## 🔑 Key Implementation Details
+
+### Authentication Flow
+- Uses Firebase Auth with Google provider
+- `react-firebase-hooks` provides `useAuthState` hook for auth state management
+- Navbar dynamically updates based on authentication status
+
+### Form Validation
+- Yup schema ensures both title and description are required
+- React Hook Form handles form state and submission
+- Error messages displayed inline for better UX
+
+### Real-time Data
+- Firestore provides real-time updates for posts and likes
+- Posts fetched on component mount using `getDocs`
+- Likes updated optimistically for immediate UI feedback
+
+### Like System Implementation
+- Separate `likes` collection with postId and userId
+- Checks if current user has liked a post using query with `where` clause
+- Adds/removes like document based on user action
+- Updates local state for instant UI response
+
+## 🐛 Troubleshooting
+
+**Firebase Auth Error:**
+- Ensure Google sign-in is enabled in Firebase Console
+- Check that your Firebase API key is correct in `.env`
+
+**Posts Not Showing:**
+- Verify Firestore database is created
+- Check Firestore rules allow read access
+- Ensure `posts` collection exists
+
+**Build Errors:**
+- Delete `node_modules` and `package-lock.json`
+- Run `npm install` again
+- Clear cache: `npm cache clean --force`
+
+## 📄 License
+
+This project is open source and available under the MIT License.
+
+## 👤 Author
+
+**Adithya B R**
+- GitHub: [@adithya-b-r](https://github.com/adithya-b-r)
+
+## 🙏 Acknowledgments
+
+- Built with [Create React App](https://create-react-app.dev/)
+- Powered by [Firebase](https://firebase.google.com/)
+- Tutorial inspired by [PedroTech](https://www.youtube.com/@PedroTechnologies)
